@@ -1,1 +1,108 @@
-<iframe src="https://player.vdocipher.com/v2/?otp=20160313versUSE323TgMWMEJpxmPrIWdlvfmncri0vRmRY42Sr3erd3oJSFrQ5c&playbackInfo=eyJ2aWRlb0lkIjoiMDAzNzJjZDkwZmRiNDY1MjgxNmYyY2Q1ZjM5NTk5N2UifQ==" style="border:0;height:360px;width:640px;max-width:100%" allowFullScreen="true" allow="encrypted-media"></iframe>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plyr Video Player with Custom Playlist Menu</title>
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.12/plyr.css">
+    <style>
+        .plyr__controls {
+            position: relative;
+        }
+        .playlist-menu {
+            display: none;
+            position: absolute;
+            top: 0;
+            right: 60px; /* Adjust position based on your layout */
+            background-color: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+            padding: 5px;
+        }
+        .playlist-menu .playlist-item {
+            cursor: default;
+            padding: 5px;
+            border-bottom: 1px solid #ddd;
+        }
+        .playlist-menu .playlist-item:last-child {
+            border-bottom: none;
+        }
+        .playlist-menu .playlist-item:hover {
+            background-color: #f0f0f0;
+        }
+        .playlist-button {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: default;
+            padding: 10px;
+            z-index: 11;
+        }
+    </style>
+</head>
+<body>
+
+<video id="player" controls>
+    <source src="https://pullzonetaher.b-cdn.net/Series/From/03/From%20S03%20004%20480p.mp4" type="video/mp4">
+    <p class="plyr__fallback">
+        Your browser does not support the video tag.
+    </p>
+</video>
+
+<!-- Custom button for playlist -->
+<button id="playlist-button" class="playlist-button" aria-label="Playlist">
+    Playlist
+</button>
+
+<!-- Playlist menu -->
+<div class="playlist-menu" id="playlist-menu">
+    <div class="playlist-item" data-src="https://pullzonetaher.b-cdn.net/Series/From/01/From%20S01%20004%20480p.mp4">Episode 4</div>
+    <div class="playlist-item" data-src="https://pullzonetaher.b-cdn.net/Series/From/01/From%20S01%20005%20480p.mp4">Episode 5</div>
+    <div class="playlist-item" data-src="https://pullzonetaher.b-cdn.net/Series/From/01/From%20S01%20006%20480p.mp4">Episode 6</div>
+    <div class="playlist-item" data-src="https://pullzonetaher.b-cdn.net/Series/From/01/From%20S01%20007%20480p.mp4">Episode 7</div>
+    <div class="playlist-item" data-src="https://pullzonetaher.b-cdn.net/Series/From/01/From%20S01%20008%20480p.mp4">Episode 8</div>
+    <div class="playlist-item" data-src="https://pullzonetaher.b-cdn.net/Series/From/01/From%20S01%20009%20480p.mp4">Episode 9</div>
+    <div class="playlist-item" data-src="https://pullzonetaher.b-cdn.net/Series/From/01/From%20S01%200010%20480p.mp4">Episode 10</div>
+    <div class="playlist-item" data-src="https://pullzonetaher.b-cdn.net/Series/From/02/From%20S02%20001%20480p.mp4">Episode 1</div>
+    <div class="playlist-item" data-src="https://pullzonetaher.b-cdn.net/Series/From/01/From%20S02%20002%20480p.mp4">Episode 2</div>
+
+    
+</div>
+
+<script src="https://cdn.plyr.io/3.6.12/plyr.js"></script>
+<script>
+    const player = new Plyr('#player');
+
+    // Toggle playlist menu
+    document.getElementById('playlist-button').addEventListener('click', () => {
+        const menu = document.getElementById('playlist-menu');
+        menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    });
+
+    // Change video source on playlist item click
+    document.querySelectorAll('.playlist-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const newSrc = item.getAttribute('data-src');
+            player.source = {
+                type: 'video',
+                sources: [{ src: newSrc, type: 'video/mp4' }]
+            };
+            player.play();
+            document.getElementById('playlist-menu').style.display = 'none'; // Hide menu after selection
+        });
+    });
+
+    // Hide menu when clicking outside
+    document.addEventListener('click', (event) => {
+        if (!document.getElementById('playlist-button').contains(event.target) && !document.getElementById('playlist-menu').contains(event.target)) {
+            document.getElementById('playlist-menu').style.display = 'none';
+        }
+    });
+</script>
+
+</body>
+</html>

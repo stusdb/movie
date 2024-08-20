@@ -1,159 +1,34 @@
-<link href="https://www.arab-drama.me/static/js/videojs/skins/treso/videojs.min.css" rel="stylesheet" type="text/css" />
-<script src="https://www.arab-drama.me/static/js/videojs/video.min.js"></script>
-<script src="https://www.arab-drama.me/static/js/videojs/nuevo.min.js?78"></script>
-<script src="https://cdn.jsdelivr.net/npm/videojs-contrib-quality-levels@2.0.9/dist/videojs-contrib-quality-levels.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/videojs-http-source-selector@1.1.5/dist/videojs-http-source-selector.min.js"></script>
-<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
-<div class="video-player" id="videoPlayer">
-    <video id="player" class="video-js vjs-16-9" controls preload playsinline poster="images/poster.jpg">
-        <source src="https://pullzonetaher.b-cdn.net/Series/From/01/From%20S01%20007%20480p.mp4" type="video/mp4" res="480" label="480">
-        <source src="https://pullzonetaher.b-cdn.net/Movies/10%20Cloverfield%20Lane%202016/10%20Cloverfield%20Lane%202016%20720p.mp4" type="video/mp4" res="720" label="720">
-        <source src="https://pullzonetaher.b-cdn.net/Movies/10%20Cloverfield%20Lane%202016/10%20Cloverfield%20Lane%202016%201080p.mp4" type="video/mp4" res="1080" label="1080">
-    </video>
-</div>
-
+<script src="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.js"></script>
+<video id="video-id"><source src="https://pullzonetaher.b-cdn.net/Series/Dark/03/Dark%20S03%20004%20480p.mp4" type="video/mp4" />
 <script>
-    var swiper = new Swiper('.swiper', {
-        slidesPerView: 1,
-        spaceBetween: 10,
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-        },
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        },
-        loop: true,
-    });
-
-    var player = videojs('player');
-    player({
-        relatedMenu: false,
-        shareMenu: false,
-        zoomMenu: false,
-        buttonForward: true,
-        contextMenu: false,
-        pipButton: false,
-        androidLock: true
-    });
-
-    // تفعيل خاصية تغيير الجودة
-    player.qualityLevels();
-    player.httpSourceSelector({
-        default: 'auto'
-    });
-
-    player.on('ready', function() {
-        player.httpSourceSelector();
-    });
-
-    document.addEventListener("fullscreenchange", function () {
-        var videoPlayer = document.getElementById('videoPlayer');
-        var isFullScreen = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
-        
-        if (isFullScreen) {
-            videoPlayer.classList.add('horizontal-mode');
-        } else {
-            videoPlayer.classList.remove('horizontal-mode');
-        }
-        
-        if (document.fullscreenElement) {
-            if (screen.orientation && screen.orientation.lock) {
-                screen.orientation.lock("landscape");
-            }
-        }
-    });
-
-    function toggleFullScreen() {
-        if (!document.fullscreenElement) {
-            if (document.documentElement.requestFullscreen) {
-                document.documentElement.requestFullscreen({ navigationUI: 'hide' });
-            } else if (document.documentElement.mozRequestFullScreen) {
-                document.documentElement.mozRequestFullScreen({ navigationUI: 'auto' });
-            } else if (document.documentElement.webkitRequestFullscreen) {
-                document.documentElement.webkitRequestFullscreen({ navigationUI: 'hide' });
-            } else if (document.documentElement.msRequestFullscreen) {
-                document.documentElement.msRequestFullscreen({ navigationUI: 'hide' });
-            }
-        } else {
-            if (document.exitFullscreen) {
-                document.exitFullscreen();
-            } else if (document.mozCancelFullScreen) {
-                document.mozCancelFullScreen();
-            } else if (document.webkitExitFullscreen) {
-                document.webkitExitFullscreen();
-            } else if (document.msExitFullscreen) {
-                document.msExitFullscreen();
-            }
-        }
-    }
-
-    document.addEventListener('contextmenu', event => event.preventDefault());
-
-    function copyText(element) {
-        const text = element.innerText;
-        const input = document.createElement('input');
-        input.value = text;
-        document.body.appendChild(input);
-        input.select();
-        document.execCommand('copy');
-        document.body.removeChild(input);
-        alert('تم نسخ عنوان الفيلم: ' + text);
-    }
-
-    function downloadImage(url) {
-        var a = document.createElement('a');
-        a.href = url;
-        a.download = 'image.jpg';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-    }
+    var myFP = fluidPlayer(
+        'video-id',	{
+	"layoutControls": {
+		"controlBar": {
+			"autoHideTimeout": 3,
+			"animated": true,
+			"autoHide": true
+		},
+		"htmlOnPauseBlock": {
+			"html": null,
+			"height": null,
+			"width": null
+		},
+		"autoPlay": false,
+		"mute": true,
+		"allowTheatre": true,
+		"playPauseAnimation": false,
+		"playbackRateEnabled": false,
+		"allowDownload": false,
+		"playButtonShowing": false,
+		"fillToContainer": false,
+		"posterImage": ""
+	},
+	"vastOptions": {
+		"adList": [],
+		"adCTAText": false,
+		"adCTATextPosition": ""
+	}
+});
 </script>
-
-<style>
-    .vjs-control-bar {
-        display: flex;
-        align-items: center;
-    }
-
-    .vjs-volume-control {
-        margin-left: auto; /* زر الصوت يظهر على اليمين */
-        display: flex;
-        align-items: center;
-    }
-
-    .vjs-time-control {
-        display: flex;
-        align-items: center;
-        padding-top: 0;
-        padding-bottom: 0;
-    }
-
-    .vjs-current-time,
-    .vjs-duration {
-        line-height: normal;
-        padding-top: 0;
-        padding-bottom: 0;
-    }
-
-    /* تعيين أبعاد الفيديو للوضع العمودي */
-    .video-player.vertical-mode {
-        height: 230px;
-    }
-
-    /* تعيين أبعاد الفيديو للوضع الأفقي */
-    .video-player.horizontal-mode {
-        height: 100vh;
-        width: 100%;
-        max-width: none;
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    } 
-</style>

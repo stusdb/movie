@@ -1,34 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Video Player with Speed Control</title>
+    <link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet" />
+    <style>
+        .vjs-speed-control {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+        .vjs-speed-control label {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Professional Video Player with Speed Control</h1>
+    <video id="myVideo" class="video-js vjs-default-skin" controls width="640" height="360">
+        <source src="https://pullzonetaher.b-cdn.net/Series/Dark/03/Dark%20S03%20004%20480p.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div class="vjs-speed-control">
+        <label for="speedControl">Speed:</label>
+        <select id="speedControl">
+            <option value="0.5">0.5x</option>
+            <option value="0.75">0.75x</option>
+            <option value="1" selected>1x</option>
+            <option value="1.25">1.25x</option>
+            <option value="1.5">1.5x</option>
+            <option value="2">2x</option>
+        </select>
+    </div>
 
-<script src="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.js"></script>
-<video id="video-id"><source src="https://pullzonetaher.b-cdn.net/Series/From/02/From%20S02%20002%20480p.mp4" type="video/mp4" />
-<script>
-    var myFP = fluidPlayer(
-        'video-id',	{
-	"layoutControls": {
-		"controlBar": {
-			"autoHideTimeout": 3,
-			"animated": true,
-			"autoHide": true
-		},
-		"htmlOnPauseBlock": {
-			"html": null,
-			"height": null,
-			"width": null
-		},
-		"autoPlay": true,
-		"mute": true,
-		"allowTheatre": true,
-		"playPauseAnimation": true,
-		"playbackRateEnabled": true,
-		"allowDownload": false,
-		"playButtonShowing": true,
-		"fillToContainer": true,
-		"posterImage": ""
-	},
-	"vastOptions": {
-		"adList": [],
-		"adCTAText": true,
-		"adCTATextPosition": ""
-	}
-});
-</script>
+    <script src="https://vjs.zencdn.net/7.15.4/video.min.js"></script>
+    <script>
+        const player = videojs('myVideo');
+
+        const speedControl = document.getElementById('speedControl');
+        speedControl.addEventListener('change', function() {
+            const speed = parseFloat(this.value);
+            player.playbackRate(speed);
+        });
+    </script>
+</body>
+</html>
